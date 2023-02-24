@@ -1,0 +1,19 @@
+ GET http://localhost:3000/task/getAll HTTP/1.1
+
+
+POST http://localhost:3000/task/add HTTP/1.1
+Content-Type:  application/json
+
+{
+    "id": 0,
+    "taskID": 1,
+    "isOpen": true,
+    "date": "",
+    "targetValue": "7:00",
+    "isAlarm": true,
+    "startTime":"",
+    "endTime": ";",
+    "frequency": "",
+    "isDone": false,
+    "finValue": ""
+  }
