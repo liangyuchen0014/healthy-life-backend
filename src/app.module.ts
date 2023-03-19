@@ -1,16 +1,19 @@
 import { Module } from '@nestjs/common';
-import { TaskController } from './task/task.controller';
 import { TaskModule } from './task/task.module';
+import { DayinfoModule } from './dayinfo/dayinfo.module';
+import { GlobalinfoModule } from "./globalinfo/globalinfo.module";
 import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   imports: [
     TaskModule,
+    DayinfoModule,
+    GlobalinfoModule,
     TypeOrmModule.forRoot({
       type: 'mysql', // 数据库类型
       host: 'localhost', // 数据库的连接地址host
       port: 3306, // 数据库的端口 3306
       username: 'root', // 连接账号
-      password: 'root', // 连接密码
+      password: 'root123', // 连接密码
       database: 'healthy_life', // 连接的表名
       retryDelay: 500, // 重试连接数据库间隔
       retryAttempts: 10, // 允许重连次数
@@ -21,4 +24,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

@@ -6,6 +6,10 @@ import { TaskService } from './task.service';
 @Controller('task')
 export class TaskController {
   constructor(private taskService: TaskService) {}
+  @Post('/updateByDateAndTaskID')
+  updateTaskByDateAndTaskID(@Body() createTaskDto: CreateTaskDto): any {
+    return this.taskService.updateTaskByDateAndTaskID(createTaskDto);
+  }
   @Post('/add')
   addTask(@Body() createTaskDto: CreateTaskDto): any {
     return this.taskService.addTask(createTaskDto);

@@ -10,8 +10,8 @@ export class TaskService {
   ) {}
 
   addTask(createTaskDto: CreateTaskDto) {
-    const data = new TaskInfo();
-    data.id = createTaskDto.id;
+    const data:TaskInfo = new TaskInfo();
+    // data.id = createTaskDto.id;
     data.date = createTaskDto.date;
     data.taskID = createTaskDto.taskID;
     data.targetValue = createTaskDto.targetValue;
@@ -23,6 +23,21 @@ export class TaskService {
     data.finValue = createTaskDto.finValue;
     data.isOpen = createTaskDto.isOpen;
     return this.taskInfo.save(data);
+  }
+  async updateTaskByDateAndTaskID(createTaskDto: CreateTaskDto) {
+    let taskToUpdate:TaskInfo =await this.taskInfo.findOneBy({
+        date:createTaskDto.date,
+        taskID:createTaskDto.taskID
+    });
+    taskToUpdate.targetValue = createTaskDto.targetValue;
+    taskToUpdate.isAlarm = createTaskDto.isAlarm;
+    taskToUpdate.startTime = createTaskDto.startTime;
+    taskToUpdate.endTime = createTaskDto.endTime;
+    taskToUpdate.frequency = createTaskDto.frequency;
+    taskToUpdate.isDone = createTaskDto.isDone;
+    taskToUpdate.finValue = createTaskDto.finValue;
+    taskToUpdate.isOpen = createTaskDto.isOpen;
+    return this.taskInfo.save(taskToUpdate);
   }
   getAllTasks() {
     return this.taskInfo.find();
