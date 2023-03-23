@@ -7,11 +7,10 @@ import { TaskInfo } from './entities/task.entity';
 export class TaskService {
   constructor(
     @InjectRepository(TaskInfo) private readonly taskInfo: Repository<TaskInfo>,
-  ) {}
+  ) { }
 
   addTask(createTaskDto: CreateTaskDto) {
-    const data:TaskInfo = new TaskInfo();
-    // data.id = createTaskDto.id;
+    const data: TaskInfo = new TaskInfo();
     data.date = createTaskDto.date;
     data.taskID = createTaskDto.taskID;
     data.targetValue = createTaskDto.targetValue;
@@ -25,9 +24,9 @@ export class TaskService {
     return this.taskInfo.save(data);
   }
   async updateTaskByDateAndTaskID(createTaskDto: CreateTaskDto) {
-    let taskToUpdate:TaskInfo =await this.taskInfo.findOneBy({
-        date:createTaskDto.date,
-        taskID:createTaskDto.taskID
+    let taskToUpdate: TaskInfo = await this.taskInfo.findOneBy({
+      date: createTaskDto.date,
+      taskID: createTaskDto.taskID
     });
     taskToUpdate.targetValue = createTaskDto.targetValue;
     taskToUpdate.isAlarm = createTaskDto.isAlarm;
@@ -38,6 +37,33 @@ export class TaskService {
     taskToUpdate.finValue = createTaskDto.finValue;
     taskToUpdate.isOpen = createTaskDto.isOpen;
     return this.taskInfo.save(taskToUpdate);
+  }
+  async query(iDate: string, isOpen: boolean = true) {
+    console.log(typeof iDate);
+    console.info('date:' + iDate)
+    console.info('date:' + JSON.stringify(iDate))
+    console.info('isOpen:' + isOpen)
+    let strDate: string = iDate.toString();
+    if (isOpen) {
+      let taskInfoToQuery: TaskInfo[] = await this.taskInfo.find({
+        where:
+          { date: iDate, isOpen: true },
+        order: {
+          taskID: "ASC"
+        }
+      })
+      return taskInfoToQuery;
+    }
+    else {
+      let taskInfoToQuery: TaskInfo[] = await this.taskInfo.find({
+        where:
+          { date: iDate },
+        order: {
+          taskID: "ASC"
+        }
+      })
+      return taskInfoToQuery;
+    }
   }
   getAllTasks() {
     return this.taskInfo.find();

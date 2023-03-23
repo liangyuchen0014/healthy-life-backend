@@ -5,14 +5,18 @@ import { TaskService } from './task.service';
 
 @Controller('task')
 export class TaskController {
-  constructor(private taskService: TaskService) {}
-  @Post('/updateByDateAndTaskID')
+  constructor(private taskService: TaskService) { }
+  @Post('/update')
   updateTaskByDateAndTaskID(@Body() createTaskDto: CreateTaskDto): any {
     return this.taskService.updateTaskByDateAndTaskID(createTaskDto);
   }
   @Post('/add')
   addTask(@Body() createTaskDto: CreateTaskDto): any {
     return this.taskService.addTask(createTaskDto);
+  }
+  @Post('/query')
+  query(@Body() date: string, isOpen: boolean = true): any {
+    return this.taskService.query(date, isOpen);
   }
   @Get('/getAll')
   getAllTasks() {
